@@ -59,7 +59,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Menu update(MenuRo menuRo, Long id) {
 
-        Menu menu = menuRepository.findById(id).get();
+        Menu menu = menuRepository.getById(id);
 
         Assert.notNull(menu, "更新的菜单不存在！");
 

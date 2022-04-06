@@ -10,7 +10,7 @@ spring:
     ansi:
       enabled: ALWAYS
   datasource:
-    url: jdbc:mysql://127.0.0.1:33066/test?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Shanghai
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver

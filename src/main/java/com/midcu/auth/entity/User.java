@@ -2,6 +2,8 @@ package com.midcu.auth.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.Table;
 @Entity
 @Data
 @Table(name="sys_user")
+@DynamicInsert
+@DynamicUpdate
 public class User extends BaseAuditable{
 
     @Column(unique = true)

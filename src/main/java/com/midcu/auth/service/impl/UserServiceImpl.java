@@ -21,6 +21,7 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,9 +73,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(UserRo userRo, Long userId) {
 
-        User user = userRepository.findById(userId).get();
+        Optional<User> optUser = userRepository.findById(userId);
 
-        Assert.notNull(user, "更新的用户不存在！");
+        Assert.isTrue(optUser.isPresent(), "更新的用户不存在！");
+
+        User user= optUser.get();
 
         BeanCopyUtils.copyProperties(userRo, user);
 
