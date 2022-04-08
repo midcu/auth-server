@@ -20,5 +20,5 @@ public class MenuVo implements Serializable {
     private final Integer sort;
     private final Boolean iframe;
     private final String iframeSrc;
-    private final Integer belongTo;
+    private final Long platformId;
 }

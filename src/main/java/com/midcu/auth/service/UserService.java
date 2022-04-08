@@ -31,5 +31,5 @@ public interface UserService {
 
     List<PermissionDto> findUserPermission(Long userId);
 
-    List<MenuVo> findUserMenu(Long userId);
+    List<MenuVo> findUserMenu(Long userId, Long platformId);
 }

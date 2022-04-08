@@ -10,6 +10,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.List;
 
@@ -28,6 +29,12 @@ public class GlobalExceptionController {
         } else {
             return JsonRes.Bad("请求发生错误！");
         }
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public JsonRes handleException(MethodArgumentTypeMismatchException e){
+
+        return JsonRes.Bad("请求参数不正确！");
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

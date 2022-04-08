@@ -42,4 +42,7 @@ public class MenuRo {
     @NotNull(message = "请设置状态！")
     private Integer state;
 
+    @NotNull(message = "请设置所属系统！")
+    private Long platformId;
+
 }

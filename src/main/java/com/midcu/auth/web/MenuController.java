@@ -25,9 +25,9 @@ public class MenuController {
 	)
 	@GetMapping("/list")
 	@PreAuthorize("hasAuthority('menus:list')")
-	public JsonRes search() {
+	public JsonRes search(Long platformId) {
 
-		return JsonRes.OK("查询成功！", menuServiceImpl.findAll());
+		return JsonRes.OK("查询成功！", menuServiceImpl.findAll(platformId));
 	}
 
 	@Operation(
@@ -37,7 +37,7 @@ public class MenuController {
 	@GetMapping("/lite")
 	@PreAuthorize("hasAuthority('menus:list')")
 	public JsonRes searchAll() {
-		return JsonRes.OK("查询成功！", menuServiceImpl.findLiteMenu());
+		return JsonRes.OK("查询成功！", menuServiceImpl.findLiteMenu(1));
 	}
 
 	@Operation(

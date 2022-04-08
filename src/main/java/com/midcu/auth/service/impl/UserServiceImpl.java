@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<MenuVo> findUserMenu(Long userId) {
-        return menuRepository.findLiteMenuByUserId(userId);
+    public List<MenuVo> findUserMenu(Long userId, Long platformId) {
+        return menuRepository.findLiteMenuByUserId(userId, platformId);
     }
 }

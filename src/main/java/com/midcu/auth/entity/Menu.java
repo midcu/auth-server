@@ -49,6 +49,7 @@ public class Menu extends BaseAuditable {
     /**
      * 所属系统 多对一关系
      */
-    private Integer belongTo;
+    @Column(nullable = false)
+    private Long platformId;
 
 }

@@ -8,6 +8,7 @@ import com.midcu.auth.service.MenuService;
 import com.midcu.auth.utils.BeanCopyUtils;
 import com.midcu.auth.web.ro.MenuRo;
 import com.midcu.auth.web.vo.MenuVo;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,18 +33,27 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public Page<Menu> findAll(Long platformId) {
+        if (platformId != null) {
+            return menuRepository.findAllByPlatformIdOrderBySort(platformId, Pageable.unpaged());
+        } else {
+            return menuRepository.findAllByOrderBySort(Pageable.unpaged());
+        }
+    }
+
+    @Override
     public Page<Menu> findAllByState(Integer state) {
         return menuRepository.findAllByStateOrderBySort(state, Pageable.unpaged());
     }
 
     @Override
-    public List<MenuVo> findLiteAllByState(Integer state) {
-        return menuRepository.findAllByStateOrderBySort(state);
+    public List<MenuVo> findLiteAllByState(Integer state, Long platformId) {
+        return menuRepository.findAllByStateAndPlatformIdOrderBySort(state, platformId);
     }
 
     @Override
-    public Page<MenuDto> findLiteMenu() {
-        return menuRepository.findByOrderBySort(Pageable.unpaged());
+    public Page<MenuDto> findLiteMenu(Integer state) {
+        return menuRepository.findByStateOrderBySort(state, Pageable.unpaged());
     }
 
     @Override

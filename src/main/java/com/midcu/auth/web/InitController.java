@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 @ResponseBody
 @Tag(name = "用户：登录注册注销，前端信息初始化！")
 public class InitController {
-    
+
     @Resource
     private UserService userServiceImpl;
 
@@ -42,11 +43,10 @@ public class InitController {
 		summary = "用户数据初始化",
     	description = "返回用户的角色，权限，菜单等内容，用于构建前端页面。"
 	)
-	@GetMapping("/init")
-	
-	public ResponseEntity<Object> init(Authentication  authentication) {
+	@GetMapping("/init/{platformId}")
 
-		
+	public ResponseEntity<Object> init(Authentication authentication, @PathVariable Long platformId) {
+
 		UserDetailsImpl userDetails = (UserDetailsImpl)authentication.getPrincipal();
 
 		User user;
@@ -64,7 +64,7 @@ public class InitController {
 			user.setDescription("系统管理员账号");
 
 			// 拥有所有的菜单
-			menus = menuServiceImpl.findLiteAllByState(1);
+			menus = menuServiceImpl.findLiteAllByState(1, platformId);
 
 			permissions = userDetails.getAuthorities().stream().map(p -> p.getAuthority()).collect(Collectors.toList());
 
@@ -72,7 +72,7 @@ public class InitController {
 
 			user = userServiceImpl.findUserDtoByUsername(userDetails.getUsername());
 
-			menus = userServiceImpl.findUserMenu(user.getId());
+			menus = userServiceImpl.findUserMenu(user.getId(), platformId);
 
 			permissions = userDetails.getAuthorities().stream().map(p -> p.getAuthority()).collect(Collectors.toList());
 
@@ -88,7 +88,7 @@ public class InitController {
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		CaptchaUtil.out(130, 32, 5, request, response);
     }
-	
+
 	public static void main(String[] args) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 

@@ -11,11 +11,13 @@ import java.util.List;
 public interface MenuService {
     Page<Menu> findAll();
 
+    Page<Menu> findAll(Long platformId);
+
     Page<Menu> findAllByState(Integer state);
 
-    List<MenuVo> findLiteAllByState(Integer state);
+    List<MenuVo> findLiteAllByState(Integer state, Long platformId);
 
-    Page<MenuDto> findLiteMenu();
+    Page<MenuDto> findLiteMenu(Integer state);
 
     Menu save(MenuRo menuRo);
 
