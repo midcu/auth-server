@@ -34,7 +34,7 @@ public class UsersController {
 	@GetMapping("/list")
 	@PreAuthorize("hasAuthority('users:list')")
 	public JsonRes search(@PageableDefault(size = 10, sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable, UserQuery userQuery) {
-		return JsonRes.OK("查询成功！", userServiceImpl.findAll(pageable.previousOrFirst(), userQuery));
+		return JsonRes.OK(JsonRes.FIND, userServiceImpl.findAll(pageable.previousOrFirst(), userQuery));
 	}
 
 	@Operation(
@@ -49,7 +49,7 @@ public class UsersController {
 
 		userRo.setPassword("{bcrypt}".concat(encoder.encode(userRo.getPassword())));
 
-		return JsonRes.OK("保存成功！", userServiceImpl.save(userRo));
+		return JsonRes.OK(JsonRes.SAVE, userServiceImpl.save(userRo));
 	}
 
 	@Operation(
@@ -68,7 +68,7 @@ public class UsersController {
         }
 
 
-		return JsonRes.OK("更新成功", userServiceImpl.update(userRo, id));
+		return JsonRes.OK(JsonRes.UPDATE, userServiceImpl.update(userRo, id));
 	}
     
 	@Operation(
@@ -80,7 +80,7 @@ public class UsersController {
 	public JsonRes del(@PathVariable("id") Long id) {
 
 		userServiceImpl.delete(id);
-		return JsonRes.OK("删除成功！");
+		return JsonRes.OK(JsonRes.DELETE);
 	}
 
 	@Operation(
@@ -91,7 +91,7 @@ public class UsersController {
 	@PreAuthorize("hasAuthority('users:roles:list')")
 	public JsonRes userRoles(@PathVariable("id") Long id) {
 
-		return JsonRes.OK("查询成功！", userServiceImpl.findUserRole(id).getContent().stream().map(Role::getId).collect(Collectors.toList()));
+		return JsonRes.OK(JsonRes.FIND, userServiceImpl.findUserRole(id).getContent().stream().map(Role::getId).collect(Collectors.toList()));
 	}
 
 	@Operation(

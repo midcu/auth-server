@@ -15,6 +15,11 @@ public class JsonRes {
 
     private Integer status;
 
+    public static String FIND = "查询成功！";
+    public static String SAVE = "保存成功！";
+    public static String UPDATE = "更新成功！";
+    public static String DELETE = "删除成功！";
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
 

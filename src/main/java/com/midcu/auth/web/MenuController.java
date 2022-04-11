@@ -27,7 +27,7 @@ public class MenuController {
 	@PreAuthorize("hasAuthority('menus:list')")
 	public JsonRes search(Long platformId) {
 
-		return JsonRes.OK("查询成功！", menuServiceImpl.findAll(platformId));
+		return JsonRes.OK(JsonRes.FIND, menuServiceImpl.findAll(platformId));
 	}
 
 	@Operation(
@@ -37,7 +37,7 @@ public class MenuController {
 	@GetMapping("/lite")
 	@PreAuthorize("hasAuthority('menus:list')")
 	public JsonRes searchAll() {
-		return JsonRes.OK("查询成功！", menuServiceImpl.findLiteMenu(1));
+		return JsonRes.OK(JsonRes.FIND, menuServiceImpl.findLiteMenu(1));
 	}
 
 	@Operation(
@@ -48,7 +48,7 @@ public class MenuController {
 	@PreAuthorize("hasAuthority('menus:add')")
 	public JsonRes create(@Validated @RequestBody MenuRo menuRo) {
 
-		return JsonRes.OK("保存成功！", menuServiceImpl.save(menuRo));
+		return JsonRes.OK(JsonRes.SAVE, menuServiceImpl.save(menuRo));
 	}
 
 	@Operation(
@@ -59,7 +59,7 @@ public class MenuController {
 	@PreAuthorize("hasAuthority('menus:edit')")
 	public JsonRes update(@RequestBody MenuRo menuRo, @PathVariable("id") Long id) {
 		menuServiceImpl.update(menuRo, id);
-		return JsonRes.OK("更新成功！");
+		return JsonRes.OK(JsonRes.UPDATE);
 	}
 
 	@Operation(
@@ -72,7 +72,7 @@ public class MenuController {
 
 		menuServiceImpl.delete(id);
 
-		return JsonRes.OK("删除成功！");
+		return JsonRes.OK(JsonRes.DELETE);
 	}
 
 }

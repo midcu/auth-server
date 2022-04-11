@@ -25,7 +25,7 @@ public class PermissionController {
 	)
 	@GetMapping("/list")
 	public JsonRes search() {
-		return JsonRes.OK("查询成功！",permissionServiceImpl.findAll(Pageable.unpaged()));
+		return JsonRes.OK(JsonRes.FIND,permissionServiceImpl.findAll(Pageable.unpaged()));
 	}
 
 	@Operation(
@@ -35,7 +35,7 @@ public class PermissionController {
 	@PostMapping
 	public JsonRes create(@Validated @RequestBody PermissionRo permissionRo) {
 
-		return JsonRes.OK("新增成功！", permissionServiceImpl.save(permissionRo));
+		return JsonRes.OK(JsonRes.SAVE, permissionServiceImpl.save(permissionRo));
 	}
 
 	@Operation(
@@ -44,7 +44,7 @@ public class PermissionController {
 	)
 	@PutMapping("/{id}")
 	public JsonRes update(@RequestBody PermissionRo permissionRo, @PathVariable("id") Long id) {
-		return JsonRes.OK("更新成功！", permissionServiceImpl.update(permissionRo, id));
+		return JsonRes.OK(JsonRes.UPDATE, permissionServiceImpl.update(permissionRo, id));
 	}
     
 	@Operation(
@@ -54,6 +54,6 @@ public class PermissionController {
 	@DeleteMapping("/{id}")
 	public JsonRes del(@PathVariable("id") Long id) {
 		permissionServiceImpl.delete(id);
-		return JsonRes.OK("删除成功！");
+		return JsonRes.OK(JsonRes.DELETE);
 	}
 }

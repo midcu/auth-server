@@ -36,7 +36,7 @@ public class RolesController {
 	@GetMapping("/list")
 	@PreAuthorize("hasAuthority('roles:list')")
 	public JsonRes search(@PageableDefault(size = 10, sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable, RoleQuery roleQuery) {
-		return JsonRes.OK("查询成功！", roleServiceImpl.findAll(pageable.previousOrFirst(), roleQuery));
+		return JsonRes.OK(JsonRes.FIND, roleServiceImpl.findAll(pageable.previousOrFirst(), roleQuery));
 	}
 
 	@Operation(
@@ -47,7 +47,7 @@ public class RolesController {
 	@PreAuthorize("hasAuthority('roles:add')")
 	public JsonRes create(@Validated @RequestBody RoleRo roleRo) {
 
-		return JsonRes.OK("新增成功！", roleServiceImpl.save(roleRo));
+		return JsonRes.OK(JsonRes.SAVE, roleServiceImpl.save(roleRo));
 	}
 
 	@Operation(
@@ -57,7 +57,7 @@ public class RolesController {
 	@PutMapping("/{id}")
 	@PreAuthorize("hasAuthority('roles:edit')")
 	public JsonRes update(@RequestBody RoleRo roleRo, @PathVariable("id") Long id) {
-		return JsonRes.OK("更新成功！", roleServiceImpl.update(roleRo, id));
+		return JsonRes.OK(JsonRes.UPDATE, roleServiceImpl.update(roleRo, id));
 	}
 
 	@Operation(
@@ -67,7 +67,7 @@ public class RolesController {
 	@GetMapping("/menus/{roleId}")
 	@PreAuthorize("hasAuthority('roles:menus')")
 	public JsonRes roleId(@PathVariable("roleId") Long roleId) {
-		return JsonRes.OK("查询成功！", roleServiceImpl.findRoleMenu(roleId).getContent().stream().map(p -> p.getId()).collect(Collectors.toList()));
+		return JsonRes.OK(JsonRes.FIND, roleServiceImpl.findRoleMenu(roleId).getContent().stream().map(p -> p.getId()).collect(Collectors.toList()));
 	}
 
 	@Operation(
@@ -80,7 +80,7 @@ public class RolesController {
 
 		roleServiceImpl.delete(roleId);
 
-		return JsonRes.OK("删除成功！");
+		return JsonRes.OK(JsonRes.DELETE);
 	}
 
 	@Operation(
@@ -90,7 +90,7 @@ public class RolesController {
 	@GetMapping("/permissions/{roleId}")
 	@PreAuthorize("hasAuthority('roles:permissions')")
 	public JsonRes permission(@PathVariable("roleId") Long roleId) {
-		return JsonRes.OK("查询成功！", roleServiceImpl.findRolePermission(roleId).getContent().stream().map(p -> p.getId()).collect(Collectors.toList()));
+		return JsonRes.OK(JsonRes.FIND, roleServiceImpl.findRolePermission(roleId).getContent().stream().map(p -> p.getId()).collect(Collectors.toList()));
 	}
 
 	@Operation(
