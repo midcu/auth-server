@@ -1,4 +1,4 @@
-package com.midcu.auth;
+package com.midcu;
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;

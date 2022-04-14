@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -46,11 +47,13 @@ public class GlobalExceptionController {
     @ExceptionHandler(BindException.class)
     public JsonRes handleException(BindException e){
 
-        List<ObjectError> errorList = e.getBindingResult().getAllErrors();
         StringBuilder msg = new StringBuilder();
-        if (errorList != null) {
-            for(ObjectError error : errorList) {
-                msg.append(error.getDefaultMessage());
+        for(ObjectError error : e.getBindingResult().getAllErrors()) {
+            String message = error.getDefaultMessage();
+            if (StringUtils.hasText(message) && message.startsWith("Failed to convert value")) {
+                msg.append("请求参数类型有误！");
+            } else {
+                msg.append(message);
             }
         }
 
