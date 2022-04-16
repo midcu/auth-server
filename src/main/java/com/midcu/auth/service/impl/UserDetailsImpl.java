@@ -1,5 +1,8 @@
 package com.midcu.auth.service.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.midcu.auth.dao.dto.PermissionDto;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,20 +11,29 @@ import java.util.Collection;
 import java.util.List;
 
 @Setter
+@JsonIgnoreProperties({ "enabled" })
 public class UserDetailsImpl implements UserDetails{
 
     private Long id;
 
     private String username;
+    @JsonIgnore
     private String password;
-    private List<PermissionDto> permissions;
+    @JsonIgnore
+    private List<PermissionDto> authorities;
     private Integer status;
+
+    private boolean accountNonExpired = true;
+
+    private boolean accountNonLocked = true;
+
+    private boolean credentialsNonExpired = true;
 
     @Override
     public Collection<PermissionDto> getAuthorities() {
-        return this.permissions;
+        return this.authorities;
     }
-    
+
     public Long getId() {
         return this.id;
     }
@@ -38,22 +50,22 @@ public class UserDetailsImpl implements UserDetails{
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return this.accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return this.credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return this.status == 1 ? true : false;
+        return this.status == 1;
     }
-    
+
 }

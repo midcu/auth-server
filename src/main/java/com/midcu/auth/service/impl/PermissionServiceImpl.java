@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,8 +27,8 @@ public class PermissionServiceImpl implements PermissionService {
     RolePermissionRepository rolePermissionRepository;
 
     @Override
-    public Page<PermissionDto> findLiteAll(Pageable pageable) {
-        return permissionRepository.findAllBy(pageable);
+    public List<PermissionDto> findLiteAll(Integer state) {
+        return permissionRepository.findAllByState(state);
     }
 
     @Override
@@ -48,11 +49,9 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public Permission update(PermissionRo permissionRo, Long id) {
 
-        Optional<Permission> optPermission = permissionRepository.findById(id);
+        Permission permission = permissionRepository.getById(id);
 
-        Assert.notNull(optPermission.isPresent(), "更新的权限不存在！");
-
-        Permission permission = optPermission.get();
+        Assert.notNull(permission, "更新的权限不存在！");
 
         BeanCopyUtils.copyProperties(permissionRo, permission);
 

@@ -1,6 +1,7 @@
 package com.midcu.auth.web;
 
 import com.midcu.auth.component.AuthModuleConfig;
+import com.midcu.auth.dao.dto.PermissionDto;
 import com.midcu.auth.entity.User;
 import com.midcu.auth.service.MenuService;
 import com.midcu.auth.service.UserService;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,7 +68,7 @@ public class InitController {
 			// 拥有所有的菜单
 			menus = menuServiceImpl.findLiteAllByState(1, platformId);
 
-			permissions = userDetails.getAuthorities().stream().map(p -> p.getAuthority()).collect(Collectors.toList());
+			permissions = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
 		} else {
 
@@ -74,7 +76,7 @@ public class InitController {
 
 			menus = userServiceImpl.findUserMenu(user.getId(), platformId);
 
-			permissions = userDetails.getAuthorities().stream().map(p -> p.getAuthority()).collect(Collectors.toList());
+			permissions = userDetails.getAuthorities().stream().map(PermissionDto::getAuthority).collect(Collectors.toList());
 
 		}
 		return new ResponseEntity<>(new InfoVo(menus, user, permissions), HttpStatus.OK);
@@ -92,9 +94,7 @@ public class InitController {
 	public static void main(String[] args) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		String pwd = "{bcrypt}";
-
-		pwd = "{bcrypt}".concat(encoder.encode("eea45e1507c2140a7abaed6c475e8b3e"));
+		String pwd = "{bcrypt}".concat(encoder.encode("eea45e1507c2140a7abaed6c475e8b3e"));
 
 		System.out.println(pwd);
 	}

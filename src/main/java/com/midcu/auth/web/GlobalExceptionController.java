@@ -19,33 +19,27 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionController {
 
-    @Value("${spring.profiles.active:prod}") String profilesActive;
-
     @ExceptionHandler(Throwable.class)
-    public JsonRes handleException(Throwable e){
+    public JsonRes handleThrowable(Throwable e){
 
-        if (profilesActive.equals("dev") || profilesActive.equals("test")) {
-            log.error("请求发生错误：", e);
-            return JsonRes.Bad(e.getMessage());
-        } else {
-            return JsonRes.Bad("请求发生错误！");
-        }
+        log.error("请求发生错误：", e);
+        return JsonRes.Bad("请求发生错误！");
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public JsonRes handleException(MethodArgumentTypeMismatchException e){
+    public JsonRes handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e){
 
         return JsonRes.Bad("请求参数不正确！");
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public JsonRes handleException(){
+    public JsonRes handleHttpRequestMethodNotSupportedException(){
 
         return JsonRes.Bad("请求方法不支持！");
     }
 
     @ExceptionHandler(BindException.class)
-    public JsonRes handleException(BindException e){
+    public JsonRes handleBindException(BindException e){
 
         StringBuilder msg = new StringBuilder();
         for(ObjectError error : e.getBindingResult().getAllErrors()) {
@@ -67,7 +61,7 @@ public class GlobalExceptionController {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public JsonRes handleAccessDeniedException(IllegalArgumentException e){
+    public JsonRes handleIllegalArgumentException(IllegalArgumentException e){
 
         return JsonRes.Err(e.getMessage());
     }

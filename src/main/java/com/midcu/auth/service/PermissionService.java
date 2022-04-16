@@ -6,9 +6,11 @@ import com.midcu.auth.web.ro.PermissionRo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface PermissionService {
 
-    Page<PermissionDto> findLiteAll(Pageable pageable);
+    List<PermissionDto> findLiteAll(Integer state);
 
     Page<Permission> findAll(Pageable pageable);
 

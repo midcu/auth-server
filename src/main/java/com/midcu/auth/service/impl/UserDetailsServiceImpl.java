@@ -41,28 +41,28 @@ public class UserDetailsServiceImpl implements UserDetailsService{
             userDetails.setPassword(authModuleConfig.getAdminPassword());
 
             // 拥有所有的权限
-            userDetails.setPermissions(permissionServiceImpl.findLiteAll(Pageable.unpaged()).getContent());
+            userDetails.setAuthorities(permissionServiceImpl.findLiteAll(1));
 
             return userDetails;
         } else {
             User user = userServiceImpl.findUserByUsername(username);
-    
+
             UserDetailsImpl userDetails = new UserDetailsImpl();
-    
+
             if (user == null) {
                 throw new UsernameNotFoundException("用户名或密码错误！");
             }
-    
+
             userDetails.setId(user.getId());
             userDetails.setUsername(user.getUsername());
             userDetails.setStatus(user.getState());
             userDetails.setPassword(user.getPassword());
-    
-            userDetails.setPermissions(userServiceImpl.findUserPermission(user.getId()));
-    
+
+            userDetails.setAuthorities(userServiceImpl.findUserPermission(user.getId()));
+
             return userDetails;
         }
-        
+
     }
-    
+
 }

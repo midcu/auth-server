@@ -14,9 +14,10 @@ import java.util.List;
 public interface PermissionRepository extends JpaRepository<Permission, Long> {
     Page<Permission> findAllByIdIn(List<Long> ids, Pageable pageable);
 
-    Page<PermissionDto> findAllBy(Pageable pageable);
+    @Query(value = "select new com.midcu.auth.dao.dto.PermissionDto(p.name) from Permission p where p.state = ?1")
+    List<PermissionDto> findAllByState(Integer state);
 
     @Query(value = "select new com.midcu.auth.dao.dto.PermissionDto(p.name) from Permission p " +
-            "inner join RolePermission rp on p.id = rp.permissionId inner join UserRole ur on rp.roleId = ur.roleId where ur.userId = ?1")
+            "inner join RolePermission rp on p.id = rp.permissionId inner join UserRole ur on rp.roleId = ur.roleId where ur.userId = ?1 and p.state = 1")
     List<PermissionDto> findAllByUserId(Long userId);
 }
