@@ -2,7 +2,6 @@ package com.midcu.auth.web;
 
 import com.midcu.auth.utils.JsonRes;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.util.StringUtils;
@@ -12,8 +11,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
-import java.util.List;
 
 @RestControllerAdvice
 @Slf4j

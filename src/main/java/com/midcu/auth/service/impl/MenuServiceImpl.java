@@ -8,7 +8,6 @@ import com.midcu.auth.service.MenuService;
 import com.midcu.auth.utils.BeanCopyUtils;
 import com.midcu.auth.web.ro.MenuRo;
 import com.midcu.auth.web.vo.MenuVo;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,11 +38,6 @@ public class MenuServiceImpl implements MenuService {
         } else {
             return menuRepository.findAllByOrderBySort(Pageable.unpaged());
         }
-    }
-
-    @Override
-    public Page<Menu> findAllByState(Integer state) {
-        return menuRepository.findAllByStateOrderBySort(state, Pageable.unpaged());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.midcu.auth.web;
 
-import com.midcu.auth.service.PermissionService;
+import com.midcu.auth.entity.BaseAuditable;
 import com.midcu.auth.service.RoleService;
 import com.midcu.auth.utils.JsonRes;
 import com.midcu.auth.web.qo.RoleQuery;
@@ -22,12 +22,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/roles")
 @Tag(name = "系统：角色管理")
 public class RolesController {
-    
+
     @Resource
 	private RoleService roleServiceImpl;
-
-	@Resource
-	private PermissionService permissionServiceImpl;
 
     @Operation(
 		summary = "角色列表获取",
@@ -35,7 +32,7 @@ public class RolesController {
 	)
 	@GetMapping("/list")
 	@PreAuthorize("hasAuthority('roles:list')")
-	public JsonRes search(@PageableDefault(size = 10, sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable, RoleQuery roleQuery) {
+	public JsonRes search(@PageableDefault(sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable, RoleQuery roleQuery) {
 		return JsonRes.OK(JsonRes.FIND, roleServiceImpl.findAll(pageable.previousOrFirst(), roleQuery));
 	}
 
@@ -67,7 +64,7 @@ public class RolesController {
 	@GetMapping("/menus/{roleId}")
 	@PreAuthorize("hasAuthority('roles:menus')")
 	public JsonRes roleId(@PathVariable("roleId") Long roleId) {
-		return JsonRes.OK(JsonRes.FIND, roleServiceImpl.findRoleMenu(roleId).getContent().stream().map(p -> p.getId()).collect(Collectors.toList()));
+		return JsonRes.OK(JsonRes.FIND, roleServiceImpl.findRoleMenu(roleId).getContent().stream().map(BaseAuditable::getId).collect(Collectors.toList()));
 	}
 
 	@Operation(
@@ -90,7 +87,7 @@ public class RolesController {
 	@GetMapping("/permissions/{roleId}")
 	@PreAuthorize("hasAuthority('roles:permissions')")
 	public JsonRes permission(@PathVariable("roleId") Long roleId) {
-		return JsonRes.OK(JsonRes.FIND, roleServiceImpl.findRolePermission(roleId).getContent().stream().map(p -> p.getId()).collect(Collectors.toList()));
+		return JsonRes.OK(JsonRes.FIND, roleServiceImpl.findRolePermission(roleId).getContent().stream().map(BaseAuditable::getId).collect(Collectors.toList()));
 	}
 
 	@Operation(

@@ -123,20 +123,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUsername(String username) {
 
-        User user = userRepository.findUserByUsername(username).get();
+        Optional<User> optionalUser = userRepository.findUserByUsername(username);
 
-        Assert.notNull(user, "用户不存在！");
+        Assert.isTrue(optionalUser.isPresent(), "用户不存在！");
 
-        return user;
+        return optionalUser.get();
     }
 
     @Override
     public User findUserDtoByUsername(String username) {
-        User user = userRepository.findByUsername(username).get();
+        Optional<User> optionalUser = userRepository.findByUsername(username);
 
-        Assert.notNull(user, "用户不存在！");
+        Assert.isTrue(optionalUser.isPresent(), "用户不存在！");
 
-        return user;
+        return optionalUser.get();
     }
 
     @Override

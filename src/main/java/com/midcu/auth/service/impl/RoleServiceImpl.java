@@ -17,7 +17,6 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,11 +63,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role update(RoleRo roleRo, Long id) {
 
-        Optional<Role> opt = roleRepository.findById(id);
+        Role role = roleRepository.getById(id);
 
-        Assert.notNull(opt, "更新的角色不存在！");
-
-        Role role = opt.get();
+        Assert.notNull(role, "更新的角色不存在！");
 
         BeanCopyUtils.copyProperties(roleRo, role);
 

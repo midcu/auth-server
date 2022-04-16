@@ -3,7 +3,6 @@ package com.midcu.auth.dao;
 import com.midcu.auth.dao.dto.MenuDto;
 import com.midcu.auth.entity.Menu;
 import com.midcu.auth.web.vo.MenuVo;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -54,12 +54,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			// 未登录或者登录超时，返回403
 			JsonResponse.setJsonResult(response, "禁止访问！", HttpServletResponse.SC_FORBIDDEN);
 		});
-		
+
 	}
 
 	@Bean
     public FilterRegistrationBean<CaptchaFilter> registration(CaptchaFilter filter) {
-        FilterRegistrationBean<CaptchaFilter> registration = new FilterRegistrationBean<CaptchaFilter>(filter);
+        FilterRegistrationBean<CaptchaFilter> registration = new FilterRegistrationBean<>(filter);
         registration.setEnabled(false);
         return registration;
     }

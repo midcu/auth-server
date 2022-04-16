@@ -13,8 +13,6 @@ public interface MenuService {
 
     Page<Menu> findAll(Long platformId);
 
-    Page<Menu> findAllByState(Integer state);
-
     List<MenuVo> findLiteAllByState(Integer state, Long platformId);
 
     Page<MenuDto> findLiteMenu(Integer state);

@@ -4,7 +4,6 @@ import com.midcu.auth.component.AuthModuleConfig;
 import com.midcu.auth.entity.User;
 import com.midcu.auth.service.PermissionService;
 import com.midcu.auth.service.UserService;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

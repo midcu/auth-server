@@ -58,8 +58,7 @@ public class MenuController {
 	@PutMapping("/{id}")
 	@PreAuthorize("hasAuthority('menus:edit')")
 	public JsonRes update(@RequestBody MenuRo menuRo, @PathVariable("id") Long id) {
-		menuServiceImpl.update(menuRo, id);
-		return JsonRes.OK(JsonRes.UPDATE);
+		return JsonRes.OK(JsonRes.UPDATE, menuServiceImpl.update(menuRo, id));
 	}
 
 	@Operation(

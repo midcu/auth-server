@@ -2,7 +2,6 @@ package com.midcu.auth.service.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.midcu.auth.dao.dto.PermissionDto;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;

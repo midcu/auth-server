@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/users")
 @Tag(name = "系统：用户管理")
 public class UsersController {
-	
+
     @Resource
 	private UserService userServiceImpl;
 
@@ -33,7 +33,7 @@ public class UsersController {
 	)
 	@GetMapping("/list")
 	@PreAuthorize("hasAuthority('users:list')")
-	public JsonRes search(@PageableDefault(size = 10, sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable, UserQuery userQuery) {
+	public JsonRes search(@PageableDefault(sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable, UserQuery userQuery) {
 		return JsonRes.OK(JsonRes.FIND, userServiceImpl.findAll(pageable.previousOrFirst(), userQuery));
 	}
 
@@ -70,7 +70,7 @@ public class UsersController {
 
 		return JsonRes.OK(JsonRes.UPDATE, userServiceImpl.update(userRo, id));
 	}
-    
+
 	@Operation(
 		summary = "删除用户",
     	description = "根据用户ID删除用户"

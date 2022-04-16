@@ -1,15 +1,20 @@
 package com.midcu.auth.entity;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name="sys_menu")
 @DynamicInsert
 @DynamicUpdate
@@ -47,9 +52,21 @@ public class Menu extends BaseAuditable {
     private String iframeSrc;
 
     /**
-     * 所属系统 多对一关系
+     * 所属系统 多对 一 关系
      */
     @Column(nullable = false)
     private Long platformId;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Menu menu = (Menu) o;
+        return getId() != null && Objects.equals(getId(), menu.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
